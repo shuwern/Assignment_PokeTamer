@@ -4,14 +4,38 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 public class PokeTamer extends JFrame{
+    ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
+    int  membershipOfTorchic, 
+         membershipOfMudkip,
+         membershipOfTreecko;
+    
+    public static String printPokemons(ArrayList<Pokemon> pokemons,int member){
+        String hp = "Pokemon \n"+
+                pokemons.get(member).getName()+"\n"+" health: \n"+pokemons.get(member).getHealth()
+                +"/"+pokemons.get(member).maxHealth;
+        String weight = "\nWeight: \n"+
+                pokemons.get(member).getWeight();
+        return hp+weight;
+    }
+
     public static void main(String[] args){
         new PokeTamer();
     }
 
     public PokeTamer(){
         super("PokeTamer");
+        String pokemonName[] = {
+            "Torchic",     
+            "Mudkip", 
+            "Treecko"     
+        };
+        pokemons.add(new Torchic());
+        pokemons.add(new Mudkip());
+        pokemons.add(new Treecko());
+
         //<container>
         Container c = getContentPane();
         c.setLayout(new BorderLayout());
@@ -21,6 +45,7 @@ public class PokeTamer extends JFrame{
         pCenter.setLayout(new FlowLayout());
         JPanel pFooter = new JPanel();
         pFooter.setLayout(new FlowLayout());
+        JPanel pRight = new JPanel();
         //</container>
         
         //<pCenter>
@@ -48,6 +73,7 @@ public class PokeTamer extends JFrame{
         //<pHeader>
         JButton feedButton = new JButton("Feed");
         JButton cleanButton = new JButton("Clean");
+        JButton exerciseButton = new JButton("Exercise");
 
         feedButton.addActionListener(new ActionListener(){
             @Override
@@ -65,49 +91,59 @@ public class PokeTamer extends JFrame{
 
         pHeader.add(feedButton); 
         pHeader.add(cleanButton);
+        pHeader.add(exerciseButton);
         //</pHeader>
+
+        //<pRight>
+        JTextArea printProfile = new JTextArea("",10,5);
+
+        pRight.add(printProfile);
+        //</pRight>
+
 
         //<pFooter>
         JLabel selectLabel = new JLabel("Select your starter: ");
-        JRadioButton RBtorchic = new JRadioButton("Torchic", true);
-        JRadioButton RBmudkip = new JRadioButton("Mudkip", false);
-        JRadioButton RBtreecko = new JRadioButton("Treecko", false);
-        ButtonGroup radioGroup = new ButtonGroup();
-        radioGroup.add(RBtorchic);
-        radioGroup.add(RBmudkip);
-        radioGroup.add(RBtreecko);
+        JComboBox selectPokemon = new JComboBox(pokemonName);
+        JButton selectButton = new JButton("Select");
 
-        RBtorchic.addActionListener(new ActionListener(){
+        selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                iconPokemon.setIcon(iconTorchic);
-            }
-        });
-
-        RBmudkip.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                iconPokemon.setIcon(iconMudkip);
-            }
-        });
-
-        RBtreecko.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                iconPokemon.setIcon(iconTreecko);
+                switch (selectPokemon.getSelectedIndex()) {
+                    case 0:
+                        iconPokemon.setIcon(iconTorchic);
+                        membershipOfTorchic = 0;
+                        printProfile.setText(printPokemons(pokemons,membershipOfTorchic));
+                        System.out.print("Torchic"+selectPokemon.getSelectedIndex());
+                        break;
+                    case 1:
+                        iconPokemon.setIcon(iconMudkip);
+                        membershipOfMudkip = 1;
+                        printProfile.setText(printPokemons(pokemons,membershipOfMudkip));
+                        System.out.print("Mudkip"+selectPokemon.getSelectedIndex());
+                        break;
+                    case 2:
+                        iconPokemon.setIcon(iconTreecko);
+                        membershipOfTreecko = 2;
+                        printProfile.setText(printPokemons(pokemons,membershipOfTreecko));
+                        System.out.print("Treecko"+selectPokemon.getSelectedIndex());
+                        break;
+                    default:
+                        break;
+                }
             }
         });
 
         pFooter.add(selectLabel);
-        pFooter.add(RBtorchic);
-        pFooter.add(RBmudkip);
-        pFooter.add(RBtreecko);
+        pFooter.add(selectPokemon);
+        pFooter.add(selectButton);
         //</pFooter>
 
         //<container_add>
         c.add(pHeader, BorderLayout.NORTH);
         c.add(pCenter, BorderLayout.CENTER);
         c.add(pFooter, BorderLayout.SOUTH);
+        c.add(pRight, BorderLayout.EAST);
         //</container_add>
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
