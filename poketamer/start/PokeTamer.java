@@ -14,6 +14,8 @@ public class PokeTamer extends JFrame{
     int  membershipOfTorchic, 
          membershipOfMudkip,
          membershipOfTreecko;
+
+    JTextArea printProfile;
     
     public static String printPokemons(ArrayList<Pokemon> pokemons,int member){
         String hp = "Pokemon \n"+
@@ -22,11 +24,6 @@ public class PokeTamer extends JFrame{
         String weight = "\nWeight: \n"+
                 pokemons.get(member).getWeight();
         return hp+weight;
-    }
-
-    public void eatBerry(int mumber){
-        Berry berry = new Berry();
-        pokemons.get(mumber).eat(berry);
     }
 
     public static void main(String[] args){
@@ -78,32 +75,8 @@ public class PokeTamer extends JFrame{
         pCenter.add(iconFeces);
         //</pCenter>
 
-        //<pHeader>
-        JButton feedButton = new JButton("Feed");
-        JButton cleanButton = new JButton("Clean");
-        JButton exerciseButton = new JButton("Exercise");
-
-        feedButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                iconItem.setIcon(iconBerry);
-            }
-        });
-
-        cleanButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                iconFeces.setIcon(iconWhite);
-            }
-        });
-
-        pHeader.add(feedButton); 
-        pHeader.add(cleanButton);
-        pHeader.add(exerciseButton);
-        //</pHeader>
-
         //<pRight>
-        JTextArea printProfile = new JTextArea("",10,5);
+        printProfile = new JTextArea("",10,5);
 
         pRight.add(printProfile);
         //</pRight>
@@ -185,6 +158,42 @@ public class PokeTamer extends JFrame{
         //pFooter.add(selectButton);
         //</pFooter>
 
+        //<pHeader>
+        JButton feedButton = new JButton("Feed");
+        JButton cleanButton = new JButton("Clean");
+        JButton exerciseButton = new JButton("Exercise");
+
+        feedButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                iconItem.setIcon(iconBerry);
+                if(RBTorchic.isSelected()){
+                    eatBerry(membershipOfTorchic);
+                    iconPokemon.setIcon(iconTorchic);
+                }
+                else if(RBMudkip.isSelected()){
+                    eatBerry(membershipOfMudkip);
+                    iconPokemon.setIcon(iconMudkip);
+                }
+                else if(RBTreecko.isSelected()){
+                    eatBerry(membershipOfTreecko);
+                    iconPokemon.setIcon(iconTreecko);
+                }
+            }
+        });
+
+        cleanButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                iconFeces.setIcon(iconWhite);
+            }
+        });
+
+        pHeader.add(feedButton); 
+        pHeader.add(cleanButton);
+        pHeader.add(exerciseButton);
+        //</pHeader>
+
         //<container_add>
         c.add(pHeader, BorderLayout.NORTH);
         c.add(pCenter, BorderLayout.CENTER);
@@ -196,4 +205,10 @@ public class PokeTamer extends JFrame{
         setSize(400, 300);
         setVisible(true);
     }
+    public void eatBerry(int member){
+        Berry berry = new Berry();
+        pokemons.get(member).eat(berry);
+        printProfile.setText(printPokemons(pokemons, member));
+    }
+
 }
