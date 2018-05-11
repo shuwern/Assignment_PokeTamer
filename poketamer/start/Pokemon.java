@@ -42,7 +42,9 @@ abstract class Pokemon{
 
     public void reducedWeight(double value){
         this.weight -= value;
-        if(this.weight < 40)
-            this.weight = 40;
+        if(this.weight < 30)
+            this.weight = 30;
     }
+
+    abstract public void move();
 }

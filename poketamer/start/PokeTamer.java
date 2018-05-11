@@ -189,6 +189,26 @@ public class PokeTamer extends JFrame{
             }
         });
 
+        exerciseButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                if(RBTorchic.isSelected()){
+                    pokemons.get(membershipOfTorchic).move();
+                    printProfile.setText(printPokemons(pokemons,membershipOfTorchic));
+                    iconPokemon.setIcon(iconTorchic);
+                }
+                else if(RBMudkip.isSelected()){
+                    pokemons.get( membershipOfMudkip).move();
+                    printProfile.setText(printPokemons(pokemons,membershipOfMudkip));
+                    iconPokemon.setIcon(iconMudkip);
+                }
+                else if(RBTreecko.isSelected()){
+                    pokemons.get( membershipOfTreecko).move();
+                    printProfile.setText(printPokemons(pokemons,membershipOfTreecko));
+                    iconPokemon.setIcon(iconTreecko);
+                }
+            }
+        });
+
         pHeader.add(feedButton); 
         pHeader.add(cleanButton);
         pHeader.add(exerciseButton);
