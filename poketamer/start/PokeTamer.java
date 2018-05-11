@@ -1,6 +1,9 @@
 package start;
 
 import javax.swing.*;
+
+import javafx.scene.control.RadioButton;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +22,11 @@ public class PokeTamer extends JFrame{
         String weight = "\nWeight: \n"+
                 pokemons.get(member).getWeight();
         return hp+weight;
+    }
+
+    public void eatBerry(int mumber){
+        Berry berry = new Berry();
+        pokemons.get(mumber).eat(berry);
     }
 
     public static void main(String[] args){
@@ -103,9 +111,44 @@ public class PokeTamer extends JFrame{
 
         //<pFooter>
         JLabel selectLabel = new JLabel("Select your starter: ");
-        JComboBox selectPokemon = new JComboBox(pokemonName);
-        JButton selectButton = new JButton("Select");
+        //JComboBox selectPokemon = new JComboBox(pokemonName);
+        //JButton selectButton = new JButton("Select");
+        JRadioButton RBTorchic = new JRadioButton("Torchic", true);
+        JRadioButton RBMudkip = new JRadioButton("Mudkip", false);
+        JRadioButton RBTreecko = new JRadioButton("Treecko", false);
+        ButtonGroup radioGroup = new ButtonGroup();
+            radioGroup.add(RBTorchic);
+            radioGroup.add(RBMudkip);
+            radioGroup.add(RBTreecko);
 
+        RBTorchic.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                iconPokemon.setIcon(iconTorchic);
+                    membershipOfTorchic = 0;
+                    printProfile.setText(printPokemons(pokemons,membershipOfTorchic));
+            }
+        });
+
+        RBMudkip.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                iconPokemon.setIcon(iconMudkip);
+                    membershipOfMudkip = 1;
+                    printProfile.setText(printPokemons(pokemons,membershipOfMudkip));
+            }
+        });
+
+        RBTreecko.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                iconPokemon.setIcon(iconTreecko);
+                    membershipOfTreecko = 2;
+                    printProfile.setText(printPokemons(pokemons,membershipOfTreecko));
+            }
+        });
+
+        /*
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -133,10 +176,13 @@ public class PokeTamer extends JFrame{
                 }
             }
         });
-
+        */
         pFooter.add(selectLabel);
-        pFooter.add(selectPokemon);
-        pFooter.add(selectButton);
+        //pFooter.add(selectPokemon);
+        pFooter.add(RBTorchic);
+        pFooter.add(RBMudkip);
+        pFooter.add(RBTreecko);
+        //pFooter.add(selectButton);
         //</pFooter>
 
         //<container_add>
