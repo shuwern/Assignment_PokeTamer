@@ -2,7 +2,7 @@ package start;
 
 public class Treecko extends Pokemon implements Runable{
     public Treecko(){
-        super("Treecko", 90, 30);
+        super("Treecko", 90, 30, 0);
     }
 
     public void move(){
@@ -11,5 +11,10 @@ public class Treecko extends Pokemon implements Runable{
 
     public void run(){
         this.reducedWeight(2);
+    }
+
+    public void battle(){
+        this.reducedHealth(Math.random() * 7);
+        this.expUp(Math.random() * 5);
     }
 }

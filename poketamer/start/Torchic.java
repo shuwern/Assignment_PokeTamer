@@ -1,8 +1,9 @@
 package start;
+import java.util.*;
 
 public class Torchic extends Pokemon implements Runable{
     public Torchic(){
-        super("Torchic", 80, 40);
+        super("Torchic", 80, 40, 0);
     }
 
     public void move(){
@@ -11,5 +12,10 @@ public class Torchic extends Pokemon implements Runable{
 
     public void run(){
         this.reducedWeight(2);
+    }
+
+    public void battle(){
+        this.reducedHealth(Math.random() * 7);
+        this.expUp(Math.random() * 5);
     }
 }

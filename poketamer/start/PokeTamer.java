@@ -19,8 +19,8 @@ public class PokeTamer extends JFrame{
     
     public static String printPokemons(ArrayList<Pokemon> pokemons,int member){
         String hp = "Pokemon \n"+
-                pokemons.get(member).getName()+"\n"+" health: \n"+pokemons.get(member).getHealth()
-                +"/"+pokemons.get(member).maxHealth;
+                pokemons.get(member).getName() + "\n"+" health: \n" + String.format("%.0f",pokemons.get(member).getHealth())
+                + "/ "+ String.format("%.0f",pokemons.get(member).maxHealth) + "\n" + "EXP: \n" + String.format("%.0f",pokemons.get(member).getExp()) + "/100.0";
         String weight = "\nWeight: \n"+
                 pokemons.get(member).getWeight();
         return hp+weight;
@@ -68,7 +68,7 @@ public class PokeTamer extends JFrame{
 
         JLabel iconFeces = new JLabel("");
         Icon iconUnji = new ImageIcon(getClass().getResource("pic_unji.png"));
-        iconFeces.setIcon(iconUnji);
+        iconFeces.setIcon(iconWhite);
 
         pCenter.add(iconItem);
         pCenter.add(iconPokemon);
@@ -121,47 +121,17 @@ public class PokeTamer extends JFrame{
             }
         });
 
-        /*
-        selectButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switch (selectPokemon.getSelectedIndex()) {
-                    case 0:
-                        iconPokemon.setIcon(iconTorchic);
-                        membershipOfTorchic = 0;
-                        printProfile.setText(printPokemons(pokemons,membershipOfTorchic));
-                        System.out.print("Torchic"+selectPokemon.getSelectedIndex());
-                        break;
-                    case 1:
-                        iconPokemon.setIcon(iconMudkip);
-                        membershipOfMudkip = 1;
-                        printProfile.setText(printPokemons(pokemons,membershipOfMudkip));
-                        System.out.print("Mudkip"+selectPokemon.getSelectedIndex());
-                        break;
-                    case 2:
-                        iconPokemon.setIcon(iconTreecko);
-                        membershipOfTreecko = 2;
-                        printProfile.setText(printPokemons(pokemons,membershipOfTreecko));
-                        System.out.print("Treecko"+selectPokemon.getSelectedIndex());
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        */
         pFooter.add(selectLabel);
-        //pFooter.add(selectPokemon);
         pFooter.add(RBTorchic);
         pFooter.add(RBMudkip);
         pFooter.add(RBTreecko);
-        //pFooter.add(selectButton);
         //</pFooter>
 
         //<pHeader>
         JButton feedButton = new JButton("Feed");
         JButton cleanButton = new JButton("Clean");
         JButton exerciseButton = new JButton("Exercise");
+        JButton battleButton = new JButton("Battle");
 
         feedButton.addActionListener(new ActionListener(){
             @Override
@@ -170,21 +140,26 @@ public class PokeTamer extends JFrame{
                 if(RBTorchic.isSelected()){
                     eatBerry(membershipOfTorchic);
                     iconPokemon.setIcon(iconTorchic);
+                    iconItem.setIcon(iconWhite);
                 }
                 else if(RBMudkip.isSelected()){
                     eatBerry(membershipOfMudkip);
                     iconPokemon.setIcon(iconMudkip);
+                    iconItem.setIcon(iconWhite);
                 }
                 else if(RBTreecko.isSelected()){
                     eatBerry(membershipOfTreecko);
                     iconPokemon.setIcon(iconTreecko);
+                    iconItem.setIcon(iconWhite);
                 }
+                iconFeces.setIcon(iconUnji);
             }
         });
 
         cleanButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                iconItem.setIcon(iconWhite);
                 iconFeces.setIcon(iconWhite);
             }
         });
@@ -197,12 +172,33 @@ public class PokeTamer extends JFrame{
                     iconPokemon.setIcon(iconTorchic);
                 }
                 else if(RBMudkip.isSelected()){
-                    pokemons.get( membershipOfMudkip).move();
+                    pokemons.get(membershipOfMudkip).move();
                     printProfile.setText(printPokemons(pokemons,membershipOfMudkip));
                     iconPokemon.setIcon(iconMudkip);
                 }
                 else if(RBTreecko.isSelected()){
-                    pokemons.get( membershipOfTreecko).move();
+                    pokemons.get(membershipOfTreecko).move();
+                    printProfile.setText(printPokemons(pokemons,membershipOfTreecko));
+                    iconPokemon.setIcon(iconTreecko);
+                }
+            }
+        });
+
+        battleButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(RBTorchic.isSelected()){
+                    pokemons.get(membershipOfTorchic).battle();
+                    printProfile.setText(printPokemons(pokemons,membershipOfTorchic));
+                    iconPokemon.setIcon(iconTorchic);
+                }
+                else if(RBMudkip.isSelected()){
+                    pokemons.get(membershipOfMudkip).battle();
+                    printProfile.setText(printPokemons(pokemons,membershipOfMudkip));
+                    iconPokemon.setIcon(iconMudkip);
+                }
+                else if(RBTreecko.isSelected()){
+                    pokemons.get(membershipOfTreecko).battle();
                     printProfile.setText(printPokemons(pokemons,membershipOfTreecko));
                     iconPokemon.setIcon(iconTreecko);
                 }
@@ -212,6 +208,7 @@ public class PokeTamer extends JFrame{
         pHeader.add(feedButton); 
         pHeader.add(cleanButton);
         pHeader.add(exerciseButton);
+        pHeader.add(battleButton);
         //</pHeader>
 
         //<container_add>
