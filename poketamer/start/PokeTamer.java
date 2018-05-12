@@ -27,10 +27,6 @@ public class PokeTamer extends JFrame{
         return hp+weight;
     }
 
-    public static void main(String[] args){
-        new PokeTamer();
-    }
-
     public PokeTamer(){
         super("PokeTamer");
         String pokemonName[] = {
@@ -136,7 +132,6 @@ public class PokeTamer extends JFrame{
         feedButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                iconItem.setIcon(iconBerry);
                 if(RBTorchic.isSelected()){
                     eatBerry(membershipOfTorchic);
                     iconPokemon.setIcon(iconTorchic);
@@ -158,7 +153,6 @@ public class PokeTamer extends JFrame{
         cleanButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                iconItem.setIcon(iconWhite);
                 iconFeces.setIcon(iconWhite);
             }
         });
