@@ -1,9 +1,8 @@
 package start;
-import java.util.*;
 
 public class Torchic extends Pokemon implements Runable{
     public Torchic(){
-        super("Torchic", 80, 40, 0);
+        super("Torchic", 80, 40, 0, 1);
     }
 
     public void move(){

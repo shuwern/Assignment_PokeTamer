@@ -2,7 +2,7 @@ package start;
 
 public class Mudkip extends Pokemon implements Runable{
     public Mudkip(){
-        super("Mudkip", 100, 50, 0);
+        super("Mudkip", 100, 50, 0, 1);
     }
 
     public void move(){

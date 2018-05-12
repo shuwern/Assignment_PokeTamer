@@ -6,13 +6,15 @@ abstract class Pokemon{
     protected double weight;
     protected String name;
     protected double exp;
+    protected int level;
 
-    public Pokemon(String name, double maxHealth, double weight, double exp){
+    public Pokemon(String name, double maxHealth, double weight, double exp, int level){
         this.name = name;
         this.health = maxHealth;
         this.maxHealth = maxHealth;
         this.weight = weight;
         this.exp = exp;
+        this.level = level;
     }
 
     public double getWeight(){
@@ -25,6 +27,10 @@ abstract class Pokemon{
 
     public double getExp(){
         return this.exp;
+    }
+
+    public int getLevel(){
+        return this.level;
     }
 
     public String getName(){
@@ -53,9 +59,17 @@ abstract class Pokemon{
     }
 
     public void expUp(double value){
-        this.exp += value;
+        if(this.health != 0 && this.weight <= 100)
+            this.exp += value;
         if(this.exp > 100)
             this.exp = 100;
+    }
+
+    public void levelUp(){
+        if(this.exp == 100){
+            this.level += 1;
+            this.exp = 0;
+        }
     }
 
     abstract public void move();

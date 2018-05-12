@@ -20,7 +20,8 @@ public class PokeTamer extends JFrame{
     public static String printPokemons(ArrayList<Pokemon> pokemons,int member){
         String hp = "Pokemon \n"+
                 pokemons.get(member).getName() + "\n"+" health: \n" + String.format("%.0f",pokemons.get(member).getHealth())
-                + "/ "+ String.format("%.0f",pokemons.get(member).maxHealth) + "\n" + "EXP: \n" + String.format("%.0f",pokemons.get(member).getExp()) + "/100.0";
+                + "/ "+ String.format("%.0f",pokemons.get(member).maxHealth) + "\n" + "EXP: \n" + String.format("%.0f",pokemons.get(member).getExp()) + "/100.0"
+                + "\n" + "Level: \n" + pokemons.get(member).getLevel();
         String weight = "\nWeight: \n"+
                 pokemons.get(member).getWeight();
         return hp+weight;
@@ -35,7 +36,7 @@ public class PokeTamer extends JFrame{
         String pokemonName[] = {
             "Torchic",     
             "Mudkip", 
-            "Treecko"     
+            "Treecko",   
         };
         pokemons.add(new Torchic());
         pokemons.add(new Mudkip());
@@ -57,17 +58,17 @@ public class PokeTamer extends JFrame{
         Icon iconWhite = new ImageIcon(getClass().getResource("pic_white.png"));
 
         JLabel iconPokemon = new JLabel("");
-        Icon iconTorchic = new ImageIcon(getClass().getResource("pic_torchic.png"));
-        Icon iconMudkip = new ImageIcon(getClass().getResource("pic_mudkip.png"));
-        Icon iconTreecko = new ImageIcon(getClass().getResource("pic_treecko.png"));
-        iconPokemon.setIcon(iconTorchic);
+        ImageIcon iconTorchic = new ImageIcon(getClass().getResource("pic_torchic.gif_c200"));
+        ImageIcon iconMudkip = new ImageIcon(getClass().getResource("pic_mudkip.gif"));
+        ImageIcon iconTreecko = new ImageIcon(getClass().getResource("pic_treecko.gif"));
+        iconPokemon.setIcon(iconWhite);
 
         JLabel iconItem = new JLabel("");
-        Icon iconBerry = new ImageIcon(getClass().getResource("pic_berry.png"));
+        ImageIcon iconBerry = new ImageIcon(getClass().getResource("pic_berry.png"));
         iconItem.setIcon(iconWhite);
 
         JLabel iconFeces = new JLabel("");
-        Icon iconUnji = new ImageIcon(getClass().getResource("pic_unji.png"));
+        ImageIcon iconUnji = new ImageIcon(getClass().getResource("pic_unji.png"));
         iconFeces.setIcon(iconWhite);
 
         pCenter.add(iconItem);
@@ -76,17 +77,15 @@ public class PokeTamer extends JFrame{
         //</pCenter>
 
         //<pRight>
-        printProfile = new JTextArea("",10,5);
+        printProfile = new JTextArea("",10,7);
 
         pRight.add(printProfile);
         //</pRight>
 
 
         //<pFooter>
-        JLabel selectLabel = new JLabel("Select your starter: ");
-        //JComboBox selectPokemon = new JComboBox(pokemonName);
-        //JButton selectButton = new JButton("Select");
-        JRadioButton RBTorchic = new JRadioButton("Torchic", true);
+        JLabel selectLabel = new JLabel("Select your pokemon: ");
+        JRadioButton RBTorchic = new JRadioButton("Torchic", false);
         JRadioButton RBMudkip = new JRadioButton("Mudkip", false);
         JRadioButton RBTreecko = new JRadioButton("Treecko", false);
         ButtonGroup radioGroup = new ButtonGroup();
@@ -132,6 +131,7 @@ public class PokeTamer extends JFrame{
         JButton cleanButton = new JButton("Clean");
         JButton exerciseButton = new JButton("Exercise");
         JButton battleButton = new JButton("Battle");
+        JButton lvupButton = new JButton("Level Up");
 
         feedButton.addActionListener(new ActionListener(){
             @Override
@@ -140,19 +140,18 @@ public class PokeTamer extends JFrame{
                 if(RBTorchic.isSelected()){
                     eatBerry(membershipOfTorchic);
                     iconPokemon.setIcon(iconTorchic);
-                    iconItem.setIcon(iconWhite);
+                    iconFeces.setIcon(iconUnji);
                 }
                 else if(RBMudkip.isSelected()){
                     eatBerry(membershipOfMudkip);
                     iconPokemon.setIcon(iconMudkip);
-                    iconItem.setIcon(iconWhite);
+                    iconFeces.setIcon(iconUnji);
                 }
                 else if(RBTreecko.isSelected()){
                     eatBerry(membershipOfTreecko);
                     iconPokemon.setIcon(iconTreecko);
-                    iconItem.setIcon(iconWhite);
+                    iconFeces.setIcon(iconUnji);
                 }
-                iconFeces.setIcon(iconUnji);
             }
         });
 
@@ -205,10 +204,32 @@ public class PokeTamer extends JFrame{
             }
         });
 
+        lvupButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(RBTorchic.isSelected()){
+                    pokemons.get(membershipOfTorchic).levelUp();
+                    printProfile.setText(printPokemons(pokemons,membershipOfTorchic));
+                    iconPokemon.setIcon(iconTorchic);
+                }
+                else if(RBMudkip.isSelected()){
+                    pokemons.get(membershipOfMudkip).levelUp();
+                    printProfile.setText(printPokemons(pokemons,membershipOfMudkip));
+                    iconPokemon.setIcon(iconMudkip);
+                }
+                else if(RBTreecko.isSelected()){
+                    pokemons.get(membershipOfTreecko).levelUp();
+                    printProfile.setText(printPokemons(pokemons,membershipOfTreecko));
+                    iconPokemon.setIcon(iconTreecko);
+                }
+            }
+        });
+
         pHeader.add(feedButton); 
         pHeader.add(cleanButton);
         pHeader.add(exerciseButton);
         pHeader.add(battleButton);
+        pHeader.add(lvupButton);
         //</pHeader>
 
         //<container_add>
@@ -219,7 +240,7 @@ public class PokeTamer extends JFrame{
         //</container_add>
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
+        setSize(500, 400);
         setVisible(true);
     }
     public void eatBerry(int member){
